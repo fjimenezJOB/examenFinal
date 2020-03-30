@@ -21,7 +21,7 @@ def subirInfoHabitacion(diccionario_info):
 
 def sacarInfo():
     collection = db['hoteles']
-    hoteles = collection.find_all()
+    hoteles = collection.find_all({},{'_id':0})
     print(hoteles)
 
 
