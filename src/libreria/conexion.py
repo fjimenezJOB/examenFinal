@@ -9,8 +9,5 @@ collection = db['informe_rural']
 
 def subirLinks(link):
     collection = db['linksHoteles']
-
-
     collection.insert_one({'link' : link})
 
-subirLinks('www.google.com')
