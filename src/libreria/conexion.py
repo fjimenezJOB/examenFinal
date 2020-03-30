@@ -7,3 +7,10 @@ client = MongoClient(MONGO_URL_ATLAS, ssl_cert_reqs=False)
 db = client['Web_Scraping']
 collection = db['informe_rural']
 
+def subirLinks(link):
+    collection = db['linksHoteles']
+
+
+    collection.insert_one({'link' : link})
+
+subirLinks('www.google.com')
