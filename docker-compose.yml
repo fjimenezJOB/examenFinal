@@ -1,0 +1,11 @@
+version: '3'
+
+services: 
+    app:
+        build: .
+        image: examenfinal
+        container_name: scrapinghotelrural
+        ports:
+            - '5005:5000'
+        volumes:
+            - ./src:/app

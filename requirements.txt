@@ -1,0 +1,15 @@
+# ZEN
+pep8
+pylint
+autopep8
+
+# FLASK
+flask
+pymongo
+dnspython
+
+# Scraping
+requests
+bs4
+IPython
+lxml
