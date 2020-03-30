@@ -3,6 +3,27 @@ from bs4 import BeautifulSoup
 import requests
 import lxml
 import re
+from pymongo import MongoClient
+
+# Mongo URL Atlas
+MONGO_URL_ATLAS = 'mongodb+srv://franjimenez:Francisco1231998@develop-0hasi.mongodb.net/test?authSource=admin&replicaSet=develop-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true'
+
+client = MongoClient(MONGO_URL_ATLAS, ssl_cert_reqs=False)
+db = client['Web_Scraping']
+
+def subirLinks(link):
+    collection = db['linksHoteles']
+    collection.insert_one({'link' : link})
+
+def subirInfoHabitacion(diccionario_info):
+    collection = db['hoteles']
+    collection.insert_one(diccionario_info)
+
+def sacarInfo():
+    collection = db['hoteles']
+    hoteles = collection.find_all()
+    print(hoteles)
+
 
 def recolectarLinks(url):
     links = []
@@ -49,29 +70,13 @@ def recolectarHotel(urlReservaHotel):
         else:
             hotelRural['titulo'] = None
 
-        # # Extraer imagen del hotel
-        # media = hotel.find('div', attrs={'class': 'foto_desa'}).get('img')
-        # if media:
-        #     imagenes = media.find_all('img')
-        #     if len(imagenes) == 0:
-        #         print('No hay imagenes')
-        #     else:
-        #         imagen = imagenes[-1]
-        #         img_src = imagen.get('src')
-        #         try:
-        #             img_req = requests.get(img_src)
-        #             if img_req.status_code == 200:
-        #                 noticias_dic['imagen'] = img_req.content
-        #             else:
-        #                 noticias_dic['imagen'] = None
-        #         except:
-        #             print('No se puedo obtener la imagen') 
-        # else:
-        #     print('No se encontro media')
-
     return hotelRural
 
-# recolectarLinks('https://www.casasrurales.net/hoteles-rurales/mallorca')
+# links = recolectarLinks('https://www.casasrurales.net/hoteles-rurales/mallorca')
 
-recolectarHotel('https://www.casasrurales.net/hoteles-rurales/finca-son-vivot--c63229')
+# for link in links:
+#     subirLinks(link)
+#     info_habitacion = recolectarHotel(link)
+#     subirInfoHabitacion(info_habitacion)
 
+sacarInfo()
